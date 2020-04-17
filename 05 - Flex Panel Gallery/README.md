@@ -16,4 +16,4 @@
 - flex-basic指定主轴方向尺寸，可以是固定或相对尺寸。
 - 当有剩余空间时按照flex-grow比例分配增大
 - 当容器尺寸不足时按照flex-shink比例缩小
-- 当flex-grow flex-shink为0时，超出容器尺寸结合overflow在火狐与chrome下表现不一致，尽可能设置缩放避免溢出容器。
+- 当flex-grow flex-shink为0时，超出容器尺寸存在兼容性问题，结合overflow也存在兼容性问题。尽可能设置缩放避免溢出容器，和避免使用order。
