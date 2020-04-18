@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Type Ahead 👀</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <form class="search-form">
+      <input type="text" class="search" placeholder="城市" />
+      <ul class="suggestions">
+        <li>查找一个城市</li>
+        <li>看看它属于那个国家</li>
+      </ul>
+    </form>
+    <script>
+      // 数据初始化
+
+      async function getCitys(value) {
+        const url =
+          "https://search.heweather.net/find?key=a7ecfc04709541caba18e84a56895804&location=" +
+          value;
+
+        const citys = await fetch(url)
+          .then((bolb) => bolb.json())
+          .then((data) => data.HeWeather6[0].basic);
+
+        return citys;
+      }
+
+      // 数据过滤
+      function findMatches(wordToMatch, cities) {
+        return cities.filter((place) => {
+          const regex = new RegExp(wordToMatch, "gi");
+          return place.location.match(regex);
+        });
+      }
+
+      async function displayMatches() {
+        const pull = await getCitys(this.value);
+        let citys = [];
+
+        if (pull != null) {
+          citys = findMatches(this.value, pull);
+        }
+
+        let html = '<li>未找到<span class="h1">' + this.value + "</span></li>";
+
+        if (citys.length !== 0) {
+          html = citys
+            .map((place) => {
+              const regex = new RegExp(this.value, "gi");
+              const cityName = place.location.replace(
+                regex,
+                `<span class="hl">${this.value}</span>`
+              );
+              const stateName = place.cnty;
+              return `
+                <li>
+                  <span class="name">${cityName}</span>
+                  <span class="population">${stateName}</span>
+                </li>
+              `;
+            })
+            .join("");
+        }
+        suggestions.innerHTML = html;
+      }
+
+      const searchInput = document.querySelector(".search");
+      const suggestions = document.querySelector(".suggestions");
+
+      searchInput.addEventListener("change", displayMatches);
+      searchInput.addEventListener("keyup", displayMatches);
+    </script>
+  </body>
+</html>
