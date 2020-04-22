@@ -15,9 +15,10 @@
 
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
+      ctx.lineWidth = 1;
 
       let isDraw = false;
-      let isBolder = true;
+      let isBolder = false;
       // 起始坐标
       let startX = 0;
       let startY = 0;
@@ -29,12 +30,12 @@
           return;
         }
         // 绘制
-        ctx.beginPath();
         ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        ctx.beginPath();
         ctx.moveTo(startX, startY);
-        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.lineTo(e.clientX, e.clientY);
         ctx.stroke();
-        [startX, startY] = [e.offsetX, e.offsetY]
+        [startX, startY] = [e.clientX, e.clientY]
 
         if (hue < 360) {
           hue++;
