@@ -7,9 +7,10 @@
 
 ## 基础
 
+- lineWidth不能修改为<1
 - 画笔的属性都是全局的，故需使用beginPath()来开始每一次路径绘制，使画笔属性只影响该次路径绘制。
 - 绘制路径都是不可见的，需要fill或stroke才能看到效果。
-- 填充需要路径是闭合的，非0填充规则。
+- fill路径需闭合，非零填充。
 
 ## MouseEvent坐标
 
@@ -25,7 +26,14 @@
 
 ## 实现
 
-1. 鼠标按下获取基于视区的坐标信息，设置
+- MouseMove Event
+- EventHandle重复调用
+  - Canvas.context.moveTo()
+  - Canvas.vontext.lineTo()
+  - hsl(0...360,360:0, fixed, fixed)
+  - lineWidth(1...100...1)
+- 依赖外部变量moveTo(**x**, **y**), hsl(**h**), isBolder, isDraw;
+
 
 
 
